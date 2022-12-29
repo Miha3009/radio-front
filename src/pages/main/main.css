@@ -1,0 +1,48 @@
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 0.6fr;
+    grid-template-rows: 0.4fr 0.6fr 1fr 1fr;
+    gap: 10px;
+    width: 800px;
+    max-width: 800px;
+}
+.grid-item {
+    padding: 4px;
+    border-radius: 10px;
+    background: #dddddd;
+}
+.channel-list {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row: 1;
+}
+.current-chanel {
+    grid-column: 1;
+    grid-row: 2;
+}
+.chat {
+    grid-column: 1;
+    grid-row-start: 3;
+    grid-row-end: 5;
+}
+.current-program {
+    grid-column: 2;
+    grid-row: 2;
+}
+.program-schedule {
+    grid-column: 2;
+    grid-row: 3;
+}
+.program-history {
+    grid-column: 2;
+    grid-row: 4;
+}
+.right-ad {
+    grid-column: 3;
+    grid-row-start: 2;
+    grid-row-end: 5;
+}
+h2 {
+    text-align: center;
+    margin: 0px;
+}
