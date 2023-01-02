@@ -1,17 +1,16 @@
 import Footer from "components/Footer";
 import Header from "components/Header";
 import { Container } from "react-bootstrap";
-import './page.css';
 
 const Page = ({ content }) => {
     return (
-        <div className="page">
+        <>
             <Header />
-            <Container className="content m-2">
+            <Container className="w-100 d-flex justify-content-center my-2">
                 {content}
             </Container>
             <Footer />
-        </div>
+        </>
     );
 }
 

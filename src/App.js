@@ -2,7 +2,7 @@ import { Context } from 'index';
 import { observer } from 'mobx-react-lite';
 import About from 'pages/about/About';
 import Contacts from 'pages/contacts/Contacts';
-import Main from 'pages/main/main';
+import Main from 'pages/main/Main';
 import News from 'pages/news/News';
 import Page from 'pages/Page';
 import PageNotFound from 'pages/pageNotFound/PageNotFound';

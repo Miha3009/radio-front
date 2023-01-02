@@ -55,7 +55,7 @@ const Header = () => {
                                         {link.name}
                                     </Nav.Link>
                                 )}
-                                <a onClick={avatarAction} className="my-auto ms-auto me-auto" role="button">
+                                <a onClick={avatarAction} className="my-auto ms-4 me-auto" role="button">
                                     <Image height="40px" width="40px" className="rounded-circle my-1" src={getAvatarUrl(store.user?.avatar)} />
                                 </a>
                             </Nav>
