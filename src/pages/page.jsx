@@ -1,14 +1,15 @@
-import Footer from "../components/footer/footer";
-import Header from "../components/header/header";
+import Footer from "components/Footer";
+import Header from "components/Header";
+import { Container } from "react-bootstrap";
 import './page.css';
 
-const Page = ({content}) => {
+const Page = ({ content }) => {
     return (
         <div className="page">
             <Header />
-            <div className="content">
+            <Container className="content m-2">
                 {content}
-            </div>
+            </Container>
             <Footer />
         </div>
     );

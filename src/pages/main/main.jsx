@@ -1,6 +1,6 @@
-import ProgramSchedule from './programSchedule/programSchedule';
-import './main.css';
 import Chat from './chat/chat';
+import './main.css';
+import ProgramSchedule from './programSchedule/programSchedule';
 
 const Main = () => {
     const programNext = [{time: "14:05", name: "Dharia - Left Untold"}, {time: "14:08", name: "Sigher - On time"}, {time: "14:11", name: "Sport podcasts"}, {time: "14:16", name: "FullerG - Boodbye"}]

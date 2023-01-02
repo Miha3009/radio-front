@@ -1,10 +1,9 @@
 body {
-	font-size: 12px;
-  font-family: "Arial";
+	font-size: 14px;
+	font-family: "Arial";
 	background: #eeeeee;
 }
 
-.wrapper {
-  width: 100%;
-  display: flex;
+.small-text {
+	font-size: 0.75rem;
 }
