@@ -4,10 +4,26 @@ body {
 	background: #eeeeee;
 }
 
+.text {
+	text-indent: 30px;
+}
+
 .small-text {
 	font-size: 0.75rem;
 }
 
 .bg-gray {
 	background-color: #dddddd;
+}
+
+.svg-btn {
+    fill: #dddddd;
+}
+
+.svg-btn:hover {
+    fill: #cccccc;
+}
+
+.svg-btn:active {
+    fill: #bbbbbb;
 }

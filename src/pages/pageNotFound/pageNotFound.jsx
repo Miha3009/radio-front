@@ -5,7 +5,7 @@ const PageNotFound = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="vh-100 d-flex align-items-center">
+        <div className="d-flex align-items-center" style={{height: "75vh"}}>
             <Container>
                 <Row className="justify-content-center">
                     <Col className="text-center">

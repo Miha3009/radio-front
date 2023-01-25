@@ -12,15 +12,15 @@ import { useContext, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
-  const store = useContext(Context);
+  const userStore = useContext(Context);
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      store.checkAuth()
+      userStore.checkAuth()
     }
   }, []);
 
-  if (store.isLoading) {
+  if (userStore.isLoading) {
     return <div />;
   }
 
@@ -33,7 +33,7 @@ function App() {
         <Route path="/programs" element={<Page content={<Programs />} />} />
         <Route path="/news" element={<Page content={<News />} />} />
         <Route path="/about" element={<Page content={<About />} />} />
-        <Route path="*" element={<PageNotFound />} />
+        <Route path="*" element={<Page content={<PageNotFound />} />} />
       </Routes>
     </BrowserRouter>
   );

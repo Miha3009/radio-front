@@ -4,11 +4,10 @@ import { makeAutoObservable } from "mobx";
 import AuthService from "services/AuthService";
 import ChannelService from "services/ChannelService";
 
-export default class Store {
+class UserStore {
     user = {};
     isAuth = false;
     isLoading = false;
-    currentChannel = {};
 
     constructor() {
         makeAutoObservable(this);
@@ -20,14 +19,6 @@ export default class Store {
 
     setUser(user) {
         this.user = user;
-    }
-
-    setLoading(isLoading) {
-        this.isLoading = isLoading;
-    }
-
-    setCurrentChannel(channel) {
-        this.currentChannel = channel;
     }
 
     async login(email, password, callback) {
@@ -82,13 +73,6 @@ export default class Store {
             this.setLoading = false;
         }
     }
-
-    async selectChannel(channelId) {
-        try {
-            const response = await ChannelService.getChannelInfo(channelId);
-            this.setCurrentChannel(response.data);
-        } catch (e) {
-            console.error(e.message);
-        }
-    }
 }
+
+export default UserStore;

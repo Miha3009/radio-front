@@ -3,15 +3,16 @@ import { observer } from "mobx-react-lite";
 import { useContext, useRef } from "react";
 import { Button, Col, Container, Form, Image, Modal, Row, Stack } from "react-bootstrap";
 import UserService from "services/UserService";
+import modalStore from "store/modalStore";
 import { getAvatarUrl } from "utils/utils";
 
-const ProfileModal = ({ show, handleClose }) => {
+const ProfileModal = () => {
     const store = useContext(Context);
     const inputAvatarFile = useRef();
     const user = store.user;
 
     return (
-        <Modal className="modal-lg" show={show} onHide={handleClose} >
+        <Modal className="modal-lg" show={modalStore.isShowProfile} onHide={() => modalStore.showProfile(false)} >
             <Modal.Header closeButton>
                 <Modal.Title>Профиль</Modal.Title>
             </Modal.Header>
@@ -37,7 +38,7 @@ const ProfileModal = ({ show, handleClose }) => {
                                     <Form.Label>Email</Form.Label>
                                     <Form.Control value={user?.email} disabled />
                                 </Form.Group>
-                                <Button type="submit" variant="danger" className="mx-auto" onClick={() => { store.logout(); handleClose() }}>Выйти</Button>
+                                <Button type="submit" variant="danger" className="mx-auto" onClick={() => { store.logout(); modalStore.showProfile(false) }}>Выйти</Button>
                             </Stack>
                         </Col>
                     </Row>

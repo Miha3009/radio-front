@@ -1,31 +1,33 @@
 import { Context } from "index";
+import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Button, Form, FormGroup, Modal, Stack } from "react-bootstrap";
+import modalStore from "store/modalStore";
 import { isEmailValid } from "utils/utils";
 
-const LoginModal = ({ show, handleClose, showRegistration, showForgetPassword }) => {
+const LoginModal = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [validated, setValidated] = useState(false);
     const [errors, setErrors] = useState('');
-    const store = useContext(Context);
+    const userStore = useContext(Context);
 
     const handleSubmit = (event) => {
         setValidated(true);
         event.preventDefault();
         event.stopPropagation();
         if (isEmailValid(email) && password) {
-            store.login(email, password, (resp) => {
+            userStore.login(email, password, (resp) => {
                 setErrors(resp.data.error);
                 if (!resp.data.error) {
-                    handleClose();
+                    modalStore.showLogin(false);
                 }
             });
         }
     }
 
     return (
-        <Modal className="modal-dialog-centered" show={show} onHide={handleClose}>
+        <Modal className="modal-dialog-centered" show={modalStore.isShowLogin} onHide={() => modalStore.showLogin(false)}>
             <Modal.Header closeButton>
                 <Modal.Title>Вход</Modal.Title>
             </Modal.Header>
@@ -41,7 +43,7 @@ const LoginModal = ({ show, handleClose, showRegistration, showForgetPassword })
                     <FormGroup controlId="formPassword" className="my-2">
                         <div className="d-flex justify-content-between">
                             <Form.Label>Пароль</Form.Label>
-                            <a className="btn btn-link p-0 small-text ms-5" onClick={() => { handleClose(); showForgetPassword() }}>Забыли пароль?</a>
+                            <a className="btn btn-link p-0 small-text ms-5" onClick={() => modalStore.showForgetPassword(true)}>Забыли пароль?</a>
                         </div>
                         <Form.Control isInvalid={validated && (!password || errors)} type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                         <Form.Control.Feedback type="invalid">
@@ -50,7 +52,7 @@ const LoginModal = ({ show, handleClose, showRegistration, showForgetPassword })
                     </FormGroup>
                     <Stack className="d-flex justify-content-center">
                         <Button type="submit" className="mx-auto">Войти</Button>
-                        <a className="btn btn-link p-0 small-text my-1" onClick={() => { handleClose(); showRegistration() }}>Не зарегистрированы?</a>
+                        <a className="btn btn-link p-0 small-text my-1" onClick={() => modalStore.showRegistration(true)}>Не зарегистрированы?</a>
                     </Stack>
                 </Form>
             </Modal.Body>
@@ -58,4 +60,4 @@ const LoginModal = ({ show, handleClose, showRegistration, showForgetPassword })
     );
 }
 
-export default LoginModal;
+export default observer(LoginModal);

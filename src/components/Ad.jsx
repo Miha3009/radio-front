@@ -1,6 +1,6 @@
 const Ad = () => {
     return (
-        <div>Реклама<br></br>Реклама<br></br>Реклама<br></br>Реклама</div>
+        <div className="text-center">Реклама<br></br>Реклама<br></br>Реклама<br></br>Реклама</div>
     );
 }
 

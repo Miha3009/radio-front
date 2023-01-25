@@ -1,0 +1,8 @@
+.hr-footer {
+    outline: 0;
+    border: 0;
+    color: black;
+    background: linear-gradient(to right, transparent, #818078, transparent);
+    position: relative;
+    height: 1px;
+}

@@ -1,10 +1,12 @@
+import { observer } from "mobx-react-lite";
 import { Button, Form, FormGroup, Modal, Stack } from "react-bootstrap";
+import modalStore from "store/modalStore";
 
-const ForgetPasswordModal = ({ show, handleClose }) => {
-    const body = <NewPasswordBody />
+const ForgetPasswordModal = () => {
+    const body = <EmailBody />
 
     return (
-        <Modal className="modal-dialog-centered" show={show} onHide={handleClose}>
+        <Modal className="modal-dialog-centered" show={modalStore.isShowForgetPassword} onHide={() => modalStore.showForgetPassword(false)}>
             <Modal.Header closeButton>
                 <Modal.Title>Восстановление пароля</Modal.Title>
             </Modal.Header>
@@ -51,4 +53,4 @@ const NewPasswordBody = () => {
     );
 }
 
-export default ForgetPasswordModal;
+export default observer(ForgetPasswordModal);
