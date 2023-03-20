@@ -3,7 +3,7 @@ import CommentSection from 'components/CommentSection';
 import { observer } from 'mobx-react-lite';
 import ChannelInfo from 'pages/main/ChannelInfo';
 import ChannelList from 'pages/main/ChannelList';
-import 'pages/main/Main.css';
+import 'pages/main/main.css';
 import ProgramSchedule from 'pages/main/ProgramSchedule';
 import TrackInfo from 'pages/main/TrackInfo';
 import { Col, Container, Row } from 'react-bootstrap';

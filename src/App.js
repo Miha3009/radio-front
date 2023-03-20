@@ -1,15 +1,15 @@
 import { Context } from 'index';
 import { observer } from 'mobx-react-lite';
-import About from 'pages/about/About';
-import Contacts from 'pages/contacts/Contacts';
-import Main from 'pages/main/Main';
-import News from 'pages/news/News';
+import About from 'pages/about/about';
+import Contacts from 'pages/contacts/contacts';
+import Main from 'pages/main/main';
+import News from 'pages/news/news';
 import NewsList from 'pages/news/NewsList';
-import Page from 'pages/Page';
-import PageNotFound from 'pages/pageNotFound/PageNotFound';
+import Page from 'pages/page';
+import PageNotFound from 'pages/pageNotFound/pageNotFound';
 import Podcast from 'pages/podcasts/Podcast';
 import PodcastList from 'pages/podcasts/PodcastList';
-import Programs from 'pages/programs/Programs';
+import Programs from 'pages/programs/programs';
 import { useContext, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
