@@ -13,7 +13,7 @@ const CommentMessage = ({ comment, isInner, reply }) => {
             <div>{comment.text}</div>
             <div className="text-secondary d-flex align-items-center">
                 {comment.time}
-                <button className="btn btn-link small-text p-0 ms-2" onClick={() => reply()}>Ответить</button>
+                <a className="small-text p-0 ms-2 text-secondary" role="button" onClick={() => reply(comment)}>Ответить</a>
             </div>
         </Stack>
     );

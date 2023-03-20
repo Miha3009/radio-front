@@ -1,11 +1,13 @@
 import Ad from 'components/Ad';
+import CommentSection from 'components/CommentSection';
+import { observer } from 'mobx-react-lite';
 import ChannelInfo from 'pages/main/ChannelInfo';
 import ChannelList from 'pages/main/ChannelList';
-import CommentSection from 'pages/main/CommentSection';
 import 'pages/main/Main.css';
 import ProgramSchedule from 'pages/main/ProgramSchedule';
 import TrackInfo from 'pages/main/TrackInfo';
 import { Col, Container, Row } from 'react-bootstrap';
+import trackStore from 'store/trackStore';
 
 const Main = () => {
     return (
@@ -16,7 +18,7 @@ const Main = () => {
             <Row>
                 <Col md={3} className="mb-3">
                     <TrackInfo />
-                    <CommentSection />
+                    <CommentSection objectType="main" id={trackStore.current.id}/>
                 </Col>
                 <Col className="mb-3">
                     <ChannelInfo />
@@ -30,4 +32,4 @@ const Main = () => {
     );
 }
 
-export default Main;
+export default observer(Main);

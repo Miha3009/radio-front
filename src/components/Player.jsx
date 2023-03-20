@@ -5,7 +5,14 @@ import FormRange from 'react-bootstrap/FormRange';
 import audioStore from 'store/audioStore';
 import './Player.css';
 
-const Player = () => {
+const Player = ({src, title}) => {
+    const play = () => {
+        if(src && audioStore.audio.src !== src) {
+            audioStore.load(src, title);
+        }
+        audioStore.play();
+    }
+
     return (
         <>
             {audioStore.isPlaying ?
@@ -13,14 +20,14 @@ const Player = () => {
                     <Pause width="25px" height="25px" className="svg-btn"/>
                 </button>
                 :
-                <button type="button" className="btn btn-link p-0" onClick={() => audioStore.play()} aria-label="Play">
+                <button type="button" className="btn btn-link p-0" onClick={play} aria-label="Play">
                     <Play width="25px" height="25px" className="svg-btn"/>
                 </button>
             }
             <div className="d-flex justify-content-center m-1">
                 <FormRange onChange={(e) => audioStore.setVolume(e.target.value / 100)} min="0" max="100" defaultValue="100" />
             </div>
-            <div className="title-text text-secondary">{audioStore.title}</div>
+            <div className="title-text text-secondary">{title ? title : audioStore.title}</div>
         </>
     );
 }

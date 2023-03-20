@@ -1,4 +1,6 @@
 import avatarDefaultImg from 'images/avatar.png';
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/ru';
 
 export const MainLink = { url: "/", name: "Эфир" }
 export const NewsLink = { url: "/news", name: "Новости" }
@@ -14,4 +16,19 @@ export function isEmailValid(email) {
 
 export function getAvatarUrl(src) {
     return src ? src : avatarDefaultImg;
+}
+
+TimeAgo.addDefaultLocale(en)
+
+export const timeformatter = new TimeAgo('ru');
+
+export function dateToString(date) {
+    const now = new Date();
+    const pad = (i) => (i < 10) ? "0" + i : "" + i;
+
+    if(now.getFullYear() == date.getFullYear() && now.getMonth() == date.getMonth() && now.getDay() == date.getDay()) {
+        return pad(date.getHours()) + ":" + pad(date.getMinutes());
+    }
+
+    return pad(date.getDate()) + "." + pad(1 + date.getMonth()) + "." + date.getFullYear();
 }

@@ -1,8 +1,5 @@
-import axios from "axios";
-import { API_URL } from "http";
 import { makeAutoObservable } from "mobx";
 import AuthService from "services/AuthService";
-import ChannelService from "services/ChannelService";
 
 class UserStore {
     user = {};
@@ -63,10 +60,10 @@ class UserStore {
     async checkAuth() {
         this.setLoading = true;
         try {
-            const response = await axios.get(`${API_URL}/refresh`, { withCredentials: true });
+            /*const response = await axios.get(`${API_URL}/refresh`, { withCredentials: true });
             localStorage.setItem('token', response.data.accessToken);
             this.setAuth(true);
-            this.setUser(response.data.user);
+            this.setUser(response.data.user);*/
         } catch (e) {
             console.error(e.message);
         } finally {

@@ -1,20 +1,41 @@
+import CommentMessage from 'components/CommentMessage';
 import { ReactComponent as Play } from 'images/play.svg';
 import { Context } from 'index';
 import { observer } from 'mobx-react-lite';
-import CommentMessage from 'pages/main/CommentMessage';
-import { useContext } from 'react';
-import { Container, Form } from 'react-bootstrap';
+import { useContext, useEffect } from 'react';
+import { Container } from 'react-bootstrap';
 import commentStore from 'store/commentStore';
 import modalStore from 'store/modalStore';
 
-const CommentSection = () => {
+const CommentSection = ({objectType, id}) => {    
     const userStore = useContext(Context);
-    const reply = () => {
+    const reply = (comment) => {
         if (userStore.isAuth) {
-            console.log("TODO reply");
+            commentStore.setReply(comment);
         } else {
             modalStore.showLogin(true);
         }
+    }
+
+    const handleSend = () => {
+        if (userStore.isAuth) {
+            commentStore.sendComment(userStore.user);
+        } else {
+            modalStore.showLogin(true);
+        }
+    }
+
+    const handleChange = (e) => {
+        commentStore.setMessageText(e.target.value);
+    }
+
+    useEffect(() => {
+        var fetch = async () => commentStore.fetchComments(objectType, id);
+        fetch();
+    }, [objectType, id]);
+
+    if (commentStore.objectType !== objectType || commentStore.id !== id) {
+        return <></>
     }
 
     return (
@@ -31,8 +52,8 @@ const CommentSection = () => {
                 })}
             </div>
             <div className="d-flex justify-content-between">
-                <Form.Control placeholder="Введите сообщение" style={{ height: "24px" }} />
-                <Play width="25px" height="25px" role="button" className="ms-1 svg-btn" />
+                <textarea placeholder="Введите сообщение" className="form-control" style={{overflowY: "hidden", height: "30px"}} value={commentStore.textInArea} onChange={handleChange}/>
+                <Play width="25px" height="25px" role="button" className="ms-1 my-auto svg-btn" onClick={handleSend} />
             </div>
         </Container>
     );

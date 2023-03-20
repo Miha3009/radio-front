@@ -14,7 +14,6 @@ import { AboutLink, getAvatarUrl, MainLink, NewsLink, PodcastsLink, ProgramsLink
 
 const Header = () => {
     let links = [MainLink, NewsLink, PodcastsLink, ProgramsLink, AboutLink];
-    let track = { title: "The Offspring - You're Gonna Go Far, Kid", src: "https://randommusic.insomnia247.nl/1000/The Offspring - You're Gonna Go Far, Kid.mp3" };
 
     const userStore = useContext(Context);
     const navigate = useNavigate();
@@ -36,7 +35,7 @@ const Header = () => {
                         <Navbar.Brand>
                             <img src={brandImg} width="40" height="40" className="d-inline-block align-top" />
                         </Navbar.Brand>
-                        <Player track={track} />
+                        <Player />
                         <Navbar.Toggle className="ms-auto" />
                         <Navbar.Collapse>
                             <Nav className="ms-auto">

@@ -1,7 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import TrackService from "services/TrackService";
 import audioStore from "store/audioStore";
-import commentStore from "store/commentStore";
 
 class TrackStore {
     current = {};
@@ -20,7 +19,6 @@ class TrackStore {
             likeCount: 125,
             isLiked: false,
         };
-        commentStore.fetchComments(trackId);
         audioStore.load(this.current.src, this.current.title);
         audioStore.pause();
     }
