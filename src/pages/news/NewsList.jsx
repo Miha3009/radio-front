@@ -1,6 +1,6 @@
 import Paginator from "components/Paginator";
 import { observer } from "mobx-react-lite";
-import NewsCard from "pages/news/newsCard";
+import NewsCard from "pages/news/NewsCard";
 import { useEffect } from "react";
 import { Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
