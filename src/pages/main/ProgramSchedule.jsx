@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { Stack } from "react-bootstrap";
 import channelStore from "store/channelStore";
+import { timeToString } from "utils/utils";
 
 const ProgramSchedule = () => {
     return (
@@ -21,10 +22,10 @@ const ProgramSchedulePart = ({ title, programs }) => {
         <div className="mx-auto my-1">
             <h4><b>{title}</b></h4>
             {programs.map(program =>
-                <p key={program.time}>
-                    <b>{program.time}</b>
+                <p key={program.id}>
+                    <b className="me-1">{timeToString(new Date(program.startdate))}</b>
                     &nbsp;
-                    {program.name}
+                    {program.track?.title}
                 </p>
             )}
         </div>

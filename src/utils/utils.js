@@ -26,9 +26,20 @@ export function dateToString(date) {
     const now = new Date();
     const pad = (i) => (i < 10) ? "0" + i : "" + i;
 
-    if(now.getFullYear() == date.getFullYear() && now.getMonth() == date.getMonth() && now.getDay() == date.getDay()) {
+    if(now.getFullYear() === date.getFullYear() && now.getMonth() === date.getMonth() && now.getDay() === date.getDay()) {
         return pad(date.getHours()) + ":" + pad(date.getMinutes());
     }
 
     return pad(date.getDate()) + "." + pad(1 + date.getMonth()) + "." + date.getFullYear();
 }
+
+export function timeToString(time) {
+    const pad = (i) => (i < 10) ? "0" + i : "" + i;
+    return pad(time.getHours()) + ":" + pad(time.getMinutes());
+}
+
+export const errorsMap = new Map([
+    ['error.user.exist', 'Пользователь уже существует'],
+    ['error.user.notFound', 'Пользователь не найден'],
+    ['error.password.wrong', 'Неверный пароль']
+]);

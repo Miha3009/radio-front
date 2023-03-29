@@ -8,7 +8,7 @@ const ChannelListItem = ({ channel }) => {
 
   return (
     <div role="button" className={isActive ? className + " bg-light" : className + " bg-gray"} onClick={() => channelStore.selectChannel(channel.id)}>
-      <Image width="25px" height="25px" src={channel.image} className="me-2" />
+      <Image width="25px" height="25px" src={channel.logo} className="me-2 my-auto" />
       <div className="my-auto">{channel.title}</div>
     </div>
   );

@@ -53,7 +53,7 @@ const ForgetPasswordModal = () => {
     );
 
     const handleNewPasswordBody = () => {
-        if (password != passwordConfirm) {
+        if (password !== passwordConfirm) {
             setValidated(true);
             return;
         }
@@ -68,7 +68,7 @@ const ForgetPasswordModal = () => {
             </FormGroup>
             <FormGroup controlId="formPasswordConfirm">
                 <Form.Label>Подтверждение пароля</Form.Label>
-                <Form.Control type="password" value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)} isInvalid={validated && password != passwordConfirm} />
+                <Form.Control type="password" value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)} isInvalid={validated && password !== passwordConfirm} />
                 <Form.Control.Feedback type="invalid">
                     Пароли не совпадают
                 </Form.Control.Feedback>
@@ -77,7 +77,7 @@ const ForgetPasswordModal = () => {
         </Stack>
     );
 
-    const body = phase == 0 ? EmailBody : (phase == 1 ? CodeBody : NewPasswordBody);
+    const body = phase === 0 ? EmailBody : (phase === 1 ? CodeBody : NewPasswordBody);
 
     return (
         <Modal className="modal-dialog-centered" show={modalStore.isShowForgetPassword} onHide={() => modalStore.showForgetPassword(false)}>

@@ -27,3 +27,10 @@ body {
 .svg-btn:active {
     fill: #bbbbbb;
 }
+
+.card img {
+	height: 300px;
+	object-fit: cover;
+	display: block;
+	width: 100%;
+  }

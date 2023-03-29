@@ -8,7 +8,8 @@ import podcastStore from "store/podcastStore";
 
 const PodcastList = ({ page }) => {
     let { id } = useParams();
-    if (page == undefined) {
+
+    if (page === undefined) {
         page = parseInt(id);
     }
 

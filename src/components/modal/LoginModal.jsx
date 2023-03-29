@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Button, Form, FormGroup, Modal, Stack } from "react-bootstrap";
 import modalStore from "store/modalStore";
-import { isEmailValid } from "utils/utils";
+import { errorsMap, isEmailValid } from "utils/utils";
 
 const LoginModal = () => {
     const [email, setEmail] = useState('');
@@ -18,9 +18,11 @@ const LoginModal = () => {
         event.stopPropagation();
         if (isEmailValid(email) && password) {
             userStore.login(email, password, (resp) => {
-                setErrors(resp.data.error);
                 if (!resp.data.error) {
+                    setErrors("");
                     modalStore.showLogin(false);
+                } else {
+                    setErrors(errorsMap.get(resp.data.error));
                 }
             });
         }

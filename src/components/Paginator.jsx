@@ -14,7 +14,7 @@ const PageItem = ({ text, active, onClick }) => {
 const Paginator = ({ pageCount, currnetPage, prefix }) => {
     const navigate = useNavigate();
     const selectPage = (pageId) => {
-        if (pageId == 1) {
+        if (pageId === 1) {
             navigate(prefix);
         } else {
             navigate(prefix + "/page/" + pageId);
@@ -30,7 +30,7 @@ const Paginator = ({ pageCount, currnetPage, prefix }) => {
             {currnetPage > 1 && currnetPage < pageCount && <PageItem text={currnetPage} active={true} onClick={() => selectPage(currnetPage)} />}
             {currnetPage < pageCount - 1 && <PageItem text={currnetPage + 1} active={false} onClick={() => selectPage(currnetPage + 1)} />}
             {currnetPage < pageCount - 2 && <span className="page-item page-link page-my text-secondary">...</span>}
-            {pageCount > 1 && <PageItem text={pageCount} active={currnetPage == pageCount} onClick={() => selectPage(pageCount)} />}
+            {pageCount > 1 && <PageItem text={pageCount} active={currnetPage === pageCount} onClick={() => selectPage(pageCount)} />}
             {currnetPage < pageCount && <PageItem text={"Далее"} onClick={() => selectPage(currnetPage + 1)} />}
         </Pagination>
     );

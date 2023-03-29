@@ -29,7 +29,7 @@ const Header = () => {
     return (
         <>
             <Stack gap={2}>
-                <Ad />
+                <Ad width="500px" height="50px" />
                 <Navbar bg="light" expand="lg" className="p-0">
                     <Stack direction="horizontal" className="w-100 mx-2">
                         <Navbar.Brand>

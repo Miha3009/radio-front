@@ -1,4 +1,7 @@
+import Hls from "hls.js";
 import { makeAutoObservable } from "mobx";
+import channelStore from "store/channelStore";
+import trackStore from "store/trackStore";
 
 class AudioStore {
     audio = null;
@@ -6,29 +9,43 @@ class AudioStore {
     isPlaying = false;
     duration = 0;
     currentTime = 0;
+    hls = null;
 
     constructor() {
         this.audio = document.getElementById("audio");
-        /*this.audio.parent = this;
-        this.audio.addEventListener('canplaythrough', (e) => e.target.parent.setDuration(e.target.duration), false);
-        setInterval(this.updateCurrentTime.bind(this), 1000);*/
+        this.audio.parent = this;
+        setInterval(this.updateCurrentTime.bind(this), 1000);
         makeAutoObservable(this);
     }
 
-    load(src, title) {
-        /*this.audio.src = src;
-        this.audio.load();
-        this.title = title;*/
+    loadhls(src) {
+        if (this.hls) {
+            this.hls.destroy();
+        }
+        this.hls = new Hls();
+        this.hls.attachMedia(this.audio);
+        this.hls.loadSource(src);
+        this.hls.on(Hls.Events.ERROR, function (event, data) {
+            if(data.response.code === 404) {
+                setTimeout(() => AudioStore.loadhls(src), 1000)}
+            }
+        );
+        if (this.isPlaying) {
+            this.audio.play();
+        } else {
+            this.audio.pause();
+        }
     }
 
     play() {
         this.isPlaying = true;
-        //this.audio.play();
+        this.audio.play();
+        trackStore.fetchCurrentTrack(channelStore.current.id);
     }
 
     pause() {
         this.isPlaying = false;
-        //this.audio.pause();
+        this.audio.pause();
     }
 
     setVolume(volume) {
@@ -44,21 +61,23 @@ class AudioStore {
     }
 
     updateCurrentTime() {
-        if (this.audio?.currentTime) {
-            this.setCurrentTime(this.audio.currentTime);
+        if(!this.isPlaying) return;
+        if(this.currentTime < this.duration) {
+            this.setCurrentTime(this.currentTime + 1);
         } else {
-            this.setCurrentTime(0);
+            if (channelStore.current?.id) {
+                trackStore.fetchCurrentTrack(channelStore.current.id);
+            }
         }
     }
 
     setSource(src) {
-        console.log(src);
-        console.log(src.getTracks()[0]);
         this.audio.srcObject = src;
-        this.audio.play();
-        this.audio.value = 1;
-        this.audio.controls = true;
-        console.log(this.audio);
+        if(this.isPlaying) {
+            this.audio.play();
+        } else {
+            this.audio.pause();
+        }
     }
 }
 

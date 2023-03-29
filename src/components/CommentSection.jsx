@@ -1,14 +1,15 @@
 import CommentMessage from 'components/CommentMessage';
 import { ReactComponent as Play } from 'images/play.svg';
-import { Context } from 'index';
+import { Context } from "index";
 import { observer } from 'mobx-react-lite';
 import { useContext, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import commentStore from 'store/commentStore';
 import modalStore from 'store/modalStore';
 
-const CommentSection = ({objectType, id}) => {    
+const CommentSection = ({objectType, id, maxHeight}) => {    
     const userStore = useContext(Context);
+
     const reply = (comment) => {
         if (userStore.isAuth) {
             commentStore.setReply(comment);
@@ -19,7 +20,7 @@ const CommentSection = ({objectType, id}) => {
 
     const handleSend = () => {
         if (userStore.isAuth) {
-            commentStore.sendComment(userStore.user);
+            commentStore.sendComment(objectType, id);
         } else {
             modalStore.showLogin(true);
         }
@@ -39,9 +40,9 @@ const CommentSection = ({objectType, id}) => {
     }
 
     return (
-        <Container className="bg-light rounded p-2">
+        <Container className="bg-light rounded p-2" style={{minWidth: "250px"}}>
             <h5><b>Комментарии <span className="text-secondary">{commentStore.commentsCount}</span></b></h5>
-            <div className="me-1 mb-2 overflow-auto chat" style={{ height: "350px" }}>
+            <div className="me-1 mb-2 overflow-auto chat" style={maxHeight ? { maxHeight: maxHeight } : {}}>
                 {commentStore.comments.map(comment => {
                     return <div key={comment.id}>
                         <CommentMessage comment={comment} isInner={false} reply={reply} />

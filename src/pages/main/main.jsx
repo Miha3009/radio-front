@@ -18,14 +18,14 @@ const Main = () => {
       <Row>
         <Col md={3} className="mb-3">
           <TrackInfo />
-          <CommentSection objectType="main" id={trackStore.current.id} />
+          <CommentSection objectType="track" id={trackStore.current.id} maxHeight="350px" />
         </Col>
         <Col className="mb-3">
           <ChannelInfo />
           <ProgramSchedule />
         </Col>
         <Col md={2} className="m-auto">
-          <Ad />
+          <Ad width="100px" height="400px" />
         </Col>
       </Row>
     </Container>

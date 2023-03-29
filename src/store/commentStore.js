@@ -1,4 +1,4 @@
-import { dateToString } from "utils/utils";
+import CommentService from "services/CommentService";
 
 const { makeAutoObservable } = require("mobx");
 
@@ -16,36 +16,50 @@ class CommentStore {
     }
 
     async fetchComments(objectType, id) {
-        this.objectType = objectType;
-        this.id = id;
-        this.clearText();
-        this.comments = [{ id: 0, text: "Привет" + id, username: "user1", avatar: "", time: "22:03", children: [] },
-        {
-            id: 1, text: "Подскажите как трек называется. Никак не могу найти", username: "user2", time: "22:03", avatar: "https://w-dog.ru/wallpapers/2/12/517460349478812/kovr-iz-xolmistyx-letnix-polej.jpg", children: [
-                { id: 2, text: "Смотри выше", username: "user1", avatar: "", time: "22:04" }
-            ]
-        },
-        { id: 3, text: "Привет", username: "user1", avatar: "", time: "22:03", children: [] },
-        { id: 4, text: "Привет", username: "user1", avatar: "", time: "22:03", children: [] },
-        { id: 5, text: "Привет", username: "user1", avatar: "", time: "22:03", children: [] },
-        { id: 6, text: "Привет", username: "user1", avatar: "", time: "22:03", children: [] },
-        { id: 7, text: "Привет", username: "user1", avatar: "", time: "22:03", children: [] },
-        { id: 8, text: "Привет", username: "user1", avatar: "", time: "22:03", children: [] },
-        { id: 9, text: "Привет", username: "user1", avatar: "", time: "22:03", children: [] },
-        { id: 10, text: "Привет", username: "user1", avatar: "", time: "22:03", children: [] },
-        ];
-        this.commentsCount = this.comments.reduce((acc, comment) => acc + 1 + comment.children.length, 0);
+        if (!objectType || !id) {
+            return;
+        }
+        try {
+            this.objectType = objectType;
+            this.id = id;
+            this.clearText();
+            let response;
+            if (this.objectType === "track") {
+                response = await CommentService.getTrackComments(id);
+            } else if (this.objectType === "news") {
+                response = await CommentService.getNewsComments(id);
+            }
+            this.comments = response.data.comments;
+            this.commentsCount = this.comments.reduce((acc, comment) => acc + 1 + comment.children.length, 0);
+        } catch (e) {
+            console.error(e.message);
+        }
     }
 
-    sendComment(user) {
-        if(this.messageText !== "") {
-            this.insertComment(user);
-            this.clearText();
+    async sendComment(objectType, id) {
+        if (!objectType || !id) {
+            return;
+        }
+        this.objectType = objectType;
+        this.id = id;
+        if (this.messageText !== "") {
+            try {
+                let parent = this.findParent();
+                if (this.objectType === "track") {
+                    await CommentService.postTrackComment(this.id, { text: this.messageText, parent: parent })
+                } else if (this.objectType === "news") {
+                    await CommentService.postNewsComment(this.id, { text: this.messageText, parent: parent })
+                }
+                this.clearText();
+                this.fetchComments(this.objectType, this.id);
+            } catch (e) {
+                console.error(e.message);
+            }
         }
     }
 
     setReply(reply) {
-        if(this.reply.id === reply.id) {
+        if (this.reply.id === reply.id) {
             this.reply = {};
         } else {
             this.reply = reply;
@@ -54,8 +68,8 @@ class CommentStore {
     }
 
     setMessageText(text) {
-        if (this.reply.username) {
-            this.messageText = text.substring(this.reply.username.length + 2);
+        if (this.reply.userName) {
+            this.messageText = text.substring(this.reply.userName.length + 2);
         } else {
             this.messageText = text;
         }
@@ -63,34 +77,41 @@ class CommentStore {
     }
 
     updateTextInArea() {
-        this.textInArea = this.reply.username ? `@${this.reply.username} ${this.messageText}` : this.messageText;
-    }
-
-    insertComment(user) {
-        const msg = {id: this.commentsCount, text: this.messageText, username: user.username, avatar: user.avatar, time: dateToString(new Date()), children: [] }
-        this.commentsCount = this.commentsCount + 1;
-        if(this.reply.username) {
-            for(let i = 0; i < this.comments.length; i += 1) {
-                if(this.comments[i].id === this.reply.id) {
-                    this.comments[i].children.push(msg);
-                    return;
-                }
-                for(let j = 0; j < this.comments[i].children.length; j += 1) {
-                    if(this.comments[i].children[j].id === this.reply.id) {
-                        this.comments[i].children.push(msg);
-                        return;
-                    }
-                }
-            }    
-        } else {
-            this.comments.push(msg);
-        }
+        this.textInArea = this.reply.userName ? `@${this.reply.userName} ${this.messageText}` : this.messageText;
     }
 
     clearText() {
         this.setReply({});
         this.setMessageText("");
         this.updateTextInArea();
+    }
+
+    findParent() {
+        let parent = this.reply.id;
+        let found = false;
+        while (!found) {
+            found = true;
+            for (let i = 0; i < this.comments.length; i += 1) {
+                if (this.comments[i].id === parent) {
+                    if (this.comments[i].parent !== -1) {
+                        found = false;
+                        parent = this.comments[i].parent;
+                    }
+                    break;
+                }
+                for (let j = 0; j < this.comments[i].children.length; j += 1) {
+                    if (this.comments[i].children[j].id === parent) {
+                        if (this.comments[i].children[j].parent !== -1) {
+                            found = false;
+                            parent = this.comments[i].children[j].parent;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        parent = parent ? parent.toString() : null;
+        return parent;
     }
 }
 

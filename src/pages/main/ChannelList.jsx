@@ -17,7 +17,7 @@ const ChannelList = () => {
                     prev: "#btnPrevChannelList",
                     next: "#btnNextChannelList",
                 }}>
-                {channelStore.channels.map(channel => <ChannelListItem key={channel.title} channel={channel}/>)}
+                {channelStore.channels.map(channel => <ChannelListItem key={channel.id} channel={channel}/>)}
             </Glider>
             <button id="btnNextChannelList" type="button" className="glider-next position-relative top-0 d-none d-sm-block" aria-disabled="false">{">"}</button>
         </Stack>

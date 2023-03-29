@@ -40,7 +40,7 @@ const Podcast = () => {
                     </div>
                 </Col>
                 <Col md={2} className="m-auto">
-                    <Ad />
+                    <Ad width="100px" height="400px"  />
                 </Col>
             </Row>
         </Container>

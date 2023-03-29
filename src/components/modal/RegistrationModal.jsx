@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Button, Form, FormGroup, Modal } from "react-bootstrap";
 import modalStore from "store/modalStore";
-import { isEmailValid } from "utils/utils";
+import { errorsMap, isEmailValid } from "utils/utils";
 
 const RegistrationModal = () => {
     const [username, setUsername] = useState('');
@@ -18,11 +18,13 @@ const RegistrationModal = () => {
         setValidated(true);
         event.preventDefault();
         event.stopPropagation();
-        if (username && isEmailValid(email) && password && password == passwordConfirm) {
-            userStore.registration(username, email, password, (resp) => {
-                setErrors(resp.data.error);
+        if (username && isEmailValid(email) && password && password === passwordConfirm) {
+            userStore.register(username, email, password, (resp) => {
                 if (!resp.data.error) {
+                    setErrors("");
                     modalStore.showRegistration(false);
+                } else {
+                    setErrors(errorsMap.get(resp.data.error));
                 }
             });
         }
@@ -58,7 +60,7 @@ const RegistrationModal = () => {
                     </FormGroup>
                     <FormGroup controlId="formPasswordConfirm" className="my-2">
                         <Form.Label>Подтверждение пароля</Form.Label>
-                        <Form.Control isInvalid={validated && password!=passwordConfirm} type="password" value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)} />
+                        <Form.Control isInvalid={validated && password!==passwordConfirm} type="password" value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)} />
                         <Form.Control.Feedback type="invalid">
                             Пароли не совпадают
                         </Form.Control.Feedback>

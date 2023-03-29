@@ -1,6 +1,6 @@
 import Paginator from "components/Paginator";
 import { observer } from "mobx-react-lite";
-import NewsCard from "pages/news/NewsCard";
+import NewsCard from "pages/news/newsCard";
 import { useEffect } from "react";
 import { Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
@@ -8,7 +8,7 @@ import newsStore from "store/newsStore";
 
 const NewsList = ({ page }) => {
     let { id } = useParams();
-    if (page == undefined) {
+    if (page === undefined) {
         page = parseInt(id);
     }
 

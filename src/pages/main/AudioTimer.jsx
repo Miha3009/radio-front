@@ -5,6 +5,9 @@ import audioStore from "store/audioStore";
 const AudioTimer = () => {
     let duration = audioStore.duration;
     let currentTime = audioStore.currentTime;
+    if(currentTime > duration) {
+        currentTime = duration;
+    }
     const minutes = Math.floor(currentTime / 60);
     const seconds = Math.floor(currentTime % 60);
     const dMinutes = Math.floor(duration / 60);
