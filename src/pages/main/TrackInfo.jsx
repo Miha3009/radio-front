@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite';
 import AudioTimer from 'pages/main/AudioTimer';
 import { useContext } from 'react';
 import { Container, Image } from "react-bootstrap";
+import channelStore from 'store/channelStore';
 import modalStore from 'store/modalStore';
 import trackStore from "store/trackStore";
 
