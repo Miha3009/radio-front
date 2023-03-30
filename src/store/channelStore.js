@@ -21,8 +21,6 @@ class ChannelStore {
             const response = await ChannelService.getChannelInfo(channelId);
             this.current = response.data;
             this.fetchSchedule(channelId);
-            /*this.current.programNext = [{ time: "14:05", name: "Dharia - Left Untold" }, { time: "14:08", name: "Sigher - On time" }, { time: "14:11", name: "Sport podcasts" }, { time: "14:16", name: "FullerG - Boodbye" }];
-            this.current.programPrev = [{ time: "14:03", name: "Dharia - Left Untold" }, { time: "14:00", name: "Новости" }, { time: "13:57", name: "Pvshv - Believe" }];*/
             trackStore.fetchCurrentTrack(channelId);
         } catch (e) {
             console.error(e.message);
